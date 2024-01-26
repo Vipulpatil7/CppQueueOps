@@ -15,24 +15,29 @@ struct node *rrindex = NULL;
 bool isqueuefull(struct node *fnode)
 {
     int cnt=0;
+    bool ret = false;
     while(fnode!=NULL)
     {
         fnode=fnode->next;
         cnt++;
     }
-    printf("Queue cnt %d\n", cnt);
     if(cnt>=QUEUE_SIZE)
-        return true;
-    else
-        return false;
+    {
+        printf("Queue is Full\n");
+        ret= true;
+    }
+    return ret;
 }
 
 bool isqueueempty(struct node *fnode)
 {
+    bool ret = false;
     if(fnode==NULL)
-        return true;
-    else
-        return false;
+    {
+        printf("Queue is Empty\n");
+        ret= true;
+    }
+    return ret;
 }
 
 void displayqueue(struct node *fnode)
@@ -45,33 +50,30 @@ void displayqueue(struct node *fnode)
     }
 }
 
-struct node * enqueue(struct node *rnode, int val)
+void enqueue(struct node **rnode, int val)
 {
     struct node *newnode = (struct node *) malloc(sizeof(struct node));
     newnode->val= val;
     newnode->next =NULL;
     if(findex==NULL)
     {
-        rnode =newnode;
         findex=newnode;
-        rrindex=newnode;
+        *rnode=newnode;
     }
     else 
     {
-        rnode->next=newnode;
-        rnode = newnode;
+        (*rnode)->next=newnode;
+        *rnode = newnode;
     }
-    return rnode;
 }
 
-struct node * dequeue(struct node *fnode, int *val)
+void dequeue(struct node **fnode, int *val)
 {
     struct node *tempnode;
-    *val = fnode->val;
-    tempnode = fnode;
-    fnode = fnode->next;
+    *val = (*fnode)->val;
+    tempnode = *fnode;
+    *fnode = (*fnode)->next;
     free(tempnode);
-    return fnode;
 }
 
 
@@ -87,31 +89,25 @@ void main(void)
         switch (input)
         {
             case 1:
-                if(isqueuefull(findex))
-                {
-                    printf("Full\n");
-                }
-                else
+                if(!isqueuefull(findex))
                 {
                     printf("Enter Value= ");
                     scanf("%d", &val);
-                    rrindex = enqueue(rrindex, val);
+                    enqueue(&rrindex, val);
                 }
             break;
 
             case 2:
-                if(isqueueempty(findex))
+                if(!isqueueempty(findex))
                 {
-                    printf("Empty\n");
-                }
-                else{
-                    findex= dequeue(findex,&val);
+                    dequeue(&findex,&val);
                     printf("\nValue= %d\n",val);
                 }
             break;
 
             case 3:
-                displayqueue(findex);
+                if(!isqueueempty(findex))
+                    displayqueue(findex);
             break;
 
             default:
