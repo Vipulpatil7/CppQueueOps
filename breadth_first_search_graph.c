@@ -110,11 +110,7 @@ void main(void)
     while(!isqueueempty())
     {
         int nod= 0;
-        //printf("\n");
-        //displayqueue();
-       //printf("\n");
         dequeue(&nod);
-        //printf("\nnod= %d\n",nod); 
 
         for(int j=0;j<7; j++)
         {
