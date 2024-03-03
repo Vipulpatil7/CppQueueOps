@@ -2,7 +2,7 @@
 
 This project is designed to add codes for various data structures and its application. The aim is to create a repo with various languages code implementation of Linked List, Stack and Queue along with their application.
 
-## Linked List
+## Single Linked List
 
 A singly linked list is a linear data structure in which the elements are not stored in contiguous memory locations and each element is connected only to its next element using a pointer.
 ![Reference Image](./imgs/sll.gif)
